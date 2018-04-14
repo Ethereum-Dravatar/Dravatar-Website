@@ -1,14 +1,13 @@
 <template lang="pug">
-    el-card(:body-style="{ padding: '0px' }")
-      img(:src="avatarUrl" class="image")
-      div(style="padding: 14px;")
-        span|账户 {{ address }}
-        div(class="bottom clearfix")
-          time.time|{{ currentDate }}
-          el-button(type="text" class="button" @click="changeAvatar")|更新头像
-        </div>
-      </div>
-    </el-card>
+    #user
+        h1| User Center
+        el-card(:body-style="{ padding: '0px' }" v-if="account")
+        img(:src="avatarUrl" class="image")
+        div(style="padding: 14px;")
+            span|账户 {{ address }}
+            div(class="bottom clearfix")
+            time.time|{{ currentDate }}
+            el-button(type="text" class="button" @click="changeAvatar")|更新头像
 </template>
 
 <script>
@@ -18,10 +17,10 @@ export default {
       return this.$store.state.account
     },
     address () {
-      return this.account.account
+      return this.$store.state.account.account
     },
     signature () {
-      return this.account.signature
+      return this.$store.state.account.signature
     },
     avatarUrl () {
       let address = this.address.toLowerCase()
@@ -29,6 +28,9 @@ export default {
         'https://s3-ap-northeast-1.amazonaws.com/dravatar.frankwei.xyz/'
       return `${url}${address}`
     }
+  },
+  created () {
+    this.$store.dispatch('fetchAccount')
   },
   methods: {
     changeAvatar () {

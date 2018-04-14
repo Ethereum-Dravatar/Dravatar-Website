@@ -1,6 +1,6 @@
 import web3 from './web3'
 import sigUtil from 'eth-sig-util'
-import request from 'superagent'
+// import request from 'superagent'
 
 export const sign = async (word) => {
   const msgParams = [
@@ -49,8 +49,8 @@ export const signData = async (msgParams, from) => {
   })
 }
 
-export const uploadToServer = async (signature) => {
-  signature = signature.result
-  return request.put('http://localhost:8000/updateAvatar')
-    .set({ Authorization: `Bearer ${signature}` })
-}
+// export const uploadToServer = async (signature) => {
+//   signature = signature.result
+//   return request.put('http://localhost:8000/updateAvatar')
+//     .set({ Authorization: `Bearer ${signature}` })
+// }

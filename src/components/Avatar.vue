@@ -1,8 +1,9 @@
 <template lang="pug">
-  .hello
+  .hello(v-if="signature")
+    h1| WTF
     el-upload(
       class="avatar-uploader"
-      action='http://localhost:8000/updateAvatar/'
+      action='http://139.162.79.136:8000/updateAvatar/'
       drag
       :headers='headers'
       :show-file-list="false"
@@ -11,7 +12,6 @@
       i.el-icon-upload
       .el-upload__text|将文件拖到此处，或点击上传
       .el-upload__tip(slot="tip")|只能上传jpg/png文件，且不超过500kb
-    button(v-on:click="sign()")|Sign
   </div>
 </template>
 
@@ -20,8 +20,7 @@
 export default {
   name: 'HelloWorld',
   data () {
-    return {
-    }
+    return {}
   },
   computed: {
     account () {
@@ -33,19 +32,19 @@ export default {
     signature () {
       return this.account['signature']
     },
-    avatarUrl () {
-      const url = 'foobar.com'
-      return this.address ? `${url}/${this.address}` : ''
-    },
     headers () {
       return { Authorization: `Bearer ${this.signature.result}` }
     }
   },
-  created () {},
+  created () {
+    if (this.signature === undefined) {
+      this.$store.dispatch('fetchAccountDetail')
+    }
+  },
   methods: {
     handleAvatarSuccess (res, file) {
       this.avatarUrl = URL.createObjectURL(file.raw)
-      this.$router.push({name: 'User'})
+      this.$router.push({ name: 'User' })
     },
     beforeAvatarUpload (file) {
       const isJPG = file.type === 'image/jpeg'
@@ -59,9 +58,6 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
       return isJPG && isLt2M
-    },
-    handleUpload (file) {
-      console.log('trigger')
     }
   }
 }
