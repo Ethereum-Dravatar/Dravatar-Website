@@ -1,4 +1,4 @@
-# mm-ipfs-upload
+# Dravatar FrontEnd
 
 > A Vue.js project
 
