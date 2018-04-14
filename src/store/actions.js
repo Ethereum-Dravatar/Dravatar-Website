@@ -16,9 +16,14 @@ import { sign, getMyAddr } from '@/api'
 import config from '@/config'
 
 export default {
+  async fetchAccount ({ commit }) {
+    const account = await getMyAddr()
+    const signature = null
+    commit('setAccount', { account, signature })
+  },
   async fetchAccountDetail ({ commit }) {
     const account = await getMyAddr()
     const signature = await sign(config.UPLOAD_STATEMENT)
-    commit('setAccount', {account, signature})
+    commit('setAccount', { account, signature })
   }
 }

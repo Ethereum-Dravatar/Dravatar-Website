@@ -16,7 +16,7 @@ export default {
     login () {
       this.dispatch('fetchAccountDetail')
         .then(() => {
-          this.$router.push({ name: 'Upload' })
+          this.$router.push({ name: 'User' })
         })
         .catch(() => {
           this.$notify.error({
