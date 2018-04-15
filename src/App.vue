@@ -1,16 +1,25 @@
 <template>
   <div id="app">
-    <h1> Dravatar </h1>
-    <router-view/>
+    <el-container>
+        <el-header>
+          <nav-bar />
+        </el-header>
+        <el-main>
+          <router-view/>
+        </el-main>
+        <el-footer>Dravtar Demo</el-footer>
+  </el-container>
   </div>
 </template>
 
 <script>
+import NavBar from './components/NavBar'
 export default {
   name: 'App',
-  created () {
-    this.$store.dispatch('fetchAccount')
-  }
+  components: {
+    NavBar
+  },
+  created () {}
 }
 </script>
 
@@ -21,6 +30,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

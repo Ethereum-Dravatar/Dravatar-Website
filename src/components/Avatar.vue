@@ -1,7 +1,11 @@
 <template lang="pug">
-  .hello(v-if="signature")
-    h1| WTF
+  #avatar
+    .not-sign(v-if="!signature")
+      h2| 没有授权签名，请重新签名验证账户
+      h4| 上传 Dravatar 需要提供签名来验证你的账户
+      Sign()
     el-upload(
+      v-if="signature"
       class="avatar-uploader"
       action='http://139.162.79.136:8000/updateAvatar/'
       drag
@@ -17,8 +21,10 @@
 
 <script>
 // import {  } from '@/api'
+import Sign from './Sign'
 export default {
   name: 'HelloWorld',
+  components: {Sign},
   data () {
     return {}
   },
@@ -37,27 +43,31 @@ export default {
     }
   },
   created () {
-    if (this.signature === undefined) {
+    if (this.$store.state.account.signature === undefined) {
       this.$store.dispatch('fetchAccountDetail')
     }
   },
   methods: {
     handleAvatarSuccess (res, file) {
-      this.avatarUrl = URL.createObjectURL(file.raw)
-      this.$router.push({ name: 'User' })
+      console.log(res)
+      setTimeout(() => {
+        this.$message('头像修改成功 三分钟内生效')
+        this.$router.push({ name: 'User' })
+      }, 3000)
     },
     beforeAvatarUpload (file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isPNG = file.type === 'image/png'
+      const isFileType = type => file.type === type
+      const isJPG = isFileType('image/jpeg')
+      const isPNG = isFileType('image/png')
+      const isJPGOrPNG = isJPG || isPNG
       const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!(isJPG || isPNG)) {
+      if (!isJPGOrPNG) {
         this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!')
       }
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
-      return isJPG && isLt2M
+      return isJPGOrPNG && isLt2M
     }
   }
 }

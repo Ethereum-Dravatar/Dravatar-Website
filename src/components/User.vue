@@ -30,7 +30,10 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('fetchAccount')
+    if (this.$store.state.account.signature === undefined) {
+      this.$store.dispatch('fetchAccount')
+    }
+    // this.$store.dispatch("fetchAccount")
   },
   methods: {
     changeAvatar () {
