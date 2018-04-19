@@ -6,7 +6,7 @@ el-menu.menu(router, :default-active="$route.path", :default-openeds="['/']", mo
   el-menu-item(index="/my")
     span(slot="title")
       | 我的 Dravatar
-  el-menu-item(index="/upload")
+  el-menu-item(index="/avatar")
     span(slot="title")
       | 更新 Dravatar
 </template>

@@ -7,7 +7,7 @@
     el-upload(
       v-if="signature"
       class="avatar-uploader"
-      action='http://139.162.79.136:8000/updateAvatar/'
+      :action='uploadServer'
       drag
       :headers='headers'
       :show-file-list="false"
@@ -22,13 +22,17 @@
 <script>
 // import {  } from '@/api'
 import Sign from './Sign'
+import {uploadServer} from '@/config'
 export default {
   name: 'HelloWorld',
-  components: {Sign},
+  components: { Sign },
   data () {
     return {}
   },
   computed: {
+    uploadServer () {
+      return `http://${uploadServer}:8000/updateAvatar/`
+    },
     account () {
       return this.$store.state.account
     },
@@ -50,10 +54,14 @@ export default {
   methods: {
     handleAvatarSuccess (res, file) {
       console.log(res)
-      setTimeout(() => {
+      if (res.code === 200) {
         this.$message('头像修改成功 三分钟内生效')
-        this.$router.push({ name: 'User' })
-      }, 3000)
+        setTimeout(() => {
+          this.$router.push({ name: 'User' })
+        }, 3000)
+      } else {
+        this.$message.error('头像修改失败 未知错误')
+      }
     },
     beforeAvatarUpload (file) {
       const isFileType = type => file.type === type
