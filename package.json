@@ -11,6 +11,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "clipboard": "^2.0.0",
     "element-ui": "^2.3.4",
     "eth-sig-util": "^1.4.2",
     "ethereumjs-util": "^5.1.5",
@@ -19,6 +20,7 @@
     "stylus-loader": "^3.0.2",
     "superagent": "^3.8.2",
     "vue": "^2.5.2",
+    "vue-image-crop-upload": "^2.2.3",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "web3": "^1.0.0-beta.33"

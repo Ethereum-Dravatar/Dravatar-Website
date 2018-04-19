@@ -4,7 +4,10 @@
     h1| Please Login with Web3 to manage your Dravatar
     h2| 请确保你的浏览器已经安装了 MetaMask 插件来访问
     //- el-button(type="primary" round @click="login")| 使用签名登录
-    Sign(afterSign='User')
+    el-row|
+      Sign(afterSign='User')
+      el-button(type="primary" round
+      icon="el-icon-document" @click="jump('api')")|查看文档
 </template>
 
 <script>
@@ -15,6 +18,9 @@ export default {
     Sign
   },
   methods: {
+    jump (name) {
+      this.$router.push({name})
+    }
     // dispatch (action) {
     //   return this.$store.dispatch(action)
     // },

@@ -4,6 +4,16 @@
       h2| 没有授权签名，请重新签名验证账户
       h4| 上传 Dravatar 需要提供签名来验证你的账户
       Sign()
+
+    my-upload(field="img"
+        @crop-success="cropSuccess"
+        @crop-upload-success="cropUploadSuccess"
+        @crop-upload-fail="cropUploadFail"
+        v-model="show"
+        :width="512"
+        :height="512" url="/upload"
+        :headers="headers" img-format="jpg")
+
     el-upload(
       v-if="signature.error === undefined"
       class="avatar-uploader"
@@ -22,12 +32,15 @@
 <script>
 // import {  } from '@/api'
 import Sign from './Sign'
-import {uploadServer} from '@/config'
+import { uploadServer } from '@/config'
+import myUpload from 'vue-image-crop-upload'
 export default {
   name: 'HelloWorld',
-  components: { Sign },
+  components: { Sign, myUpload },
   data () {
-    return {}
+    return {
+      show: false
+    }
   },
   computed: {
     uploadServer () {

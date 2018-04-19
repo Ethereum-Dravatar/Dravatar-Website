@@ -1,5 +1,5 @@
 <template lang="pug">
-      el-button(type="primary" round @click="login")| 使用签名登录
+      el-button(type="primary" icon="el-icon-edit" round @click="login")| 使用签名登录
 </template>
 
 <script>
