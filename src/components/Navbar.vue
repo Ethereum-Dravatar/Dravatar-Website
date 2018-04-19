@@ -1,5 +1,7 @@
 <template lang="pug">
-el-menu.menu(router, :default-active="$route.path", :default-openeds="['/']", mode="horizontal")
+el-menu.menu(router,
+:default-active="$route.path", :default-openeds="['/']",
+mode="horizontal")
   el-menu-item(index="/")
     span(slot="title")
       | Dravatar
@@ -14,13 +16,13 @@ el-menu.menu(router, :default-active="$route.path", :default-openeds="['/']", mo
 <script>
 export default {
   data () {
-    return {
-    }
+    return {}
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.menu
-  height 100%
+.menu {
+  height: 100%;
+}
 </style>

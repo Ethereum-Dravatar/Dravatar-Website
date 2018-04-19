@@ -1,11 +1,11 @@
 <template lang="pug">
   #avatar
-    .not-sign(v-if="!signature")
+    .not-sign(v-if="(!signature) || (signature.error)")
       h2| 没有授权签名，请重新签名验证账户
       h4| 上传 Dravatar 需要提供签名来验证你的账户
       Sign()
     el-upload(
-      v-if="signature"
+      v-if="signature.error === undefined"
       class="avatar-uploader"
       :action='uploadServer'
       drag
