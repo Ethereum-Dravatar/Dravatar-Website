@@ -8,18 +8,7 @@ mode="horizontal")
   el-menu-item(index="/my")
     span(slot="title")
       | 我的 Dravatar
-  el-menu-item(index="/avatar")
-    span(slot="title")
-      | 更新 Dravatar
 </template>
-
-<script>
-export default {
-  data () {
-    return {}
-  }
-}
-</script>
 
 <style lang="stylus" scoped>
 .menu {

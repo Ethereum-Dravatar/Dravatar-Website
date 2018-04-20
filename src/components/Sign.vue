@@ -1,23 +1,33 @@
 <template lang="pug">
-      el-button(type="primary" icon="el-icon-edit" round @click="login")| 使用签名登录
+      el-button(type="primary" icon="iconfont icon-user" v-if="isLogin" round @click="jump('User')")| 查看我的 Dravatar
+      el-button(type="primary" icon="el-icon-edit" v-else round @click="login")| 使用签名登录
 </template>
 
 <script>
 export default {
   name: 'Sign',
   props: ['afterSign'],
+  computed: {
+    isLogin () {
+      return !(!this.$store.state.account.signature)
+    }
+  },
   methods: {
     dispatch (action) {
       return this.$store.dispatch(action)
+    },
+    jump (name) {
+      this.$router.push({ name })
     },
     login () {
       this.dispatch('fetchAccountDetail')
         .then(() => {
           if (this.afterSign !== undefined) {
-            this.$router.push({ name: this.afterSign })
+            this.jump(this.afterSign)
           }
         })
-        .catch(() => {
+        .catch((error) => {
+          console.error(error)
           this.$notify.error({
             title: '登录错误',
             message: '请安装 MetaMask 插件'
