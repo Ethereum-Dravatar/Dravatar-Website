@@ -5,12 +5,14 @@
           img(:src="avatarUrl" class="image")
           div(style="padding: 14px;")
               span|你的以太坊钱包地址: {{ address }}
+
           el-row|
             el-button(type="primary" icon='iconfont icon-user'
             round class="button" @click="changeAvatar"
             v-if="signature")|更新头像
             Sign(v-if="!signature")
-            el-button(type="primary" icon='iconfont icon-link' round class="button clip" :data-clipboard-text="avatarUrl")|获得头像外链
+            el-button(type="primary" icon='iconfont icon-link'
+            round class="button clip" :data-clipboard-text="avatarUrl")|获得头像外链
 
           my-upload(field="img"
             v-if="signature"
@@ -93,9 +95,6 @@ export default {
 </script>
 
 <style scoped>
-#user {
-
-}
 .image {
   border-radius: 1rem;
 }
