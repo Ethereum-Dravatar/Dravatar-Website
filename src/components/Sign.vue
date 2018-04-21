@@ -26,11 +26,10 @@ export default {
             this.jump(this.afterSign)
           }
         })
-        .catch((error) => {
-          console.error(error)
+        .catch(() => {
           this.$notify.error({
             title: '登录错误',
-            message: '请安装 MetaMask 插件'
+            message: '请安装或解锁 MetaMask 插件'
           })
         })
     }
