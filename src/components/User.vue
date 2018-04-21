@@ -2,7 +2,7 @@
     #user
         h1| 我的 Dravatar
         div(v-if="account")
-          img(:src="avatarUrl" class="image")
+          img(:src="avatar" class="image")
           div(style="padding: 14px;")
               span|你的以太坊钱包地址: {{ address }}
 
@@ -27,10 +27,12 @@
 <script>
 import Clipboard from 'clipboard'
 import myUpload from 'vue-image-crop-upload'
+import { getAvatar } from '@/avatar'
 import Sign from './Sign'
+import { getMyAddr } from '@/api'
 import { uploadServer } from '@/config'
 // eslint-disable-next-line
-const clipboard = new Clipboard('.clip')
+const clipboard = new Clipboard(".clip");
 export default {
   components: {
     myUpload,
@@ -38,7 +40,9 @@ export default {
   },
   data () {
     return {
-      isUpload: false
+      isUpload: false,
+      avatar: '',
+      address: ''
     }
   },
   computed: {
@@ -47,9 +51,6 @@ export default {
     },
     account () {
       return this.$store.state.account
-    },
-    address () {
-      return this.$store.state.account.account
     },
     signature () {
       return this.$store.state.account.signature
@@ -64,11 +65,14 @@ export default {
       return { Authorization: `Bearer ${this.signature.result}` }
     }
   },
-  created () {
+  async created () {
     if (this.$store.state.account.signature === undefined) {
       this.$store.dispatch('fetchAccount')
     }
+    // getAvatar('0x7Abe675E58Ce7fF61DB425665046B88B72561e7A')
     // this.$store.dispatch("fetchAccount")
+    this.address = await getMyAddr()
+    this.avatar = await getAvatar(this.address)
   },
   methods: {
     changeAvatar () {
@@ -79,10 +83,7 @@ export default {
       console.log('-------- upload success --------')
       console.log(jsonData)
       console.log('field: ' + field)
-      this.$message('头像修改成功 三分钟内生效')
-      setTimeout(() => {
-        this.$router.push({ name: 'User' })
-      }, 3000)
+      this.$message('头像修改成功 三分钟左右生效')
     },
     cropUploadFail (status, field) {
       console.log('-------- upload fail --------')
@@ -98,5 +99,4 @@ export default {
 .image {
   border-radius: 1rem;
 }
-
 </style>
