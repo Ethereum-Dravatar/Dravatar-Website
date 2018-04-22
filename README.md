@@ -1,6 +1,6 @@
 # Dravatar FrontEnd
 
-Demo: http://dravatar.etherfen.com/
+Demo: http://cn.dravatar.xyz/
 
 > A Vue.js project
 
